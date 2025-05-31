@@ -1,0 +1,145 @@
+1. Bank Account System
+    Use constructor to initialize account details and destructor to log account closing.
+
+Example:
+    #include<iostream>
+    using namespace std;
+
+    class BankAccount {
+        string accountHolder;
+        int accountNumber;
+        double balance;
+
+    public:
+        BankAccount(string name, int accNo, double initialBalance) {
+            accountHolder = name;
+            accountNumber = accNo;
+            balance = initialBalance;
+            cout << "Session started for " << accountHolder << endl;
+        }
+
+        void displayBalance() {
+            cout << "Account No: " << accountNumber << ", Balance: ₹" << balance << endl;
+        }
+
+        ~BankAccount() {
+            cout << "Session ended for " << accountHolder << ", it is being closed.\n";
+        }
+    };
+
+    int main() {
+        BankAccount acc1("Ravi Kumar", 123456, 10000.50);
+        acc1.displayBalance();
+        return 0;
+    }
+
+Output:
+    Session started for Ravi Kumar
+    Account No: 123456, Balance: ₹10000.5
+    Session ended for Ravi Kumar, it is being closed.
+
+2. File Handler (Simulation)
+    Simulating opening and closing a file.
+
+Example:
+    #include<iostream>
+    using namespace std;
+
+    class FileHandler {
+    public:
+        FileHandler() {
+            cout << "File opened successfully.\n";
+        }
+
+        void readFile() {
+            cout << "Reading contents from the file...\n";
+        }
+
+        ~FileHandler() {
+            cout << "File closed successfully.\n";
+        }
+    };
+
+    int main() {
+        FileHandler file;
+        file.readFile();
+        return 0;
+    }
+
+Output:
+    File opened successfully.
+    Reading contents from the file...
+    File closed successfully.
+
+3. Student Registration System
+    Constructor assigns values; destructor confirms the closing of Registration.
+
+Example:
+    #include<iostream>
+    using namespace std;
+
+    class Student {
+        string name;
+        int rollNo;
+
+    public:
+        Student(string n, int r) {
+            name = n;
+            rollNo = r;
+            cout << "Student " << name << " with Roll No " << rollNo << " registered.\n";
+        }
+
+        ~Student() {
+            cout << "Registration for " << name << " has been closed.\n";
+        }
+    };
+
+    int main() {
+        Student s1("Anjali", 101);
+        Student s2("Rahul", 102);
+        return 0;
+    }
+
+Output:
+    Student Anjali with Roll No 101 registered.
+    Student Rahul with Roll No 102 registered.
+    Registration for Rahul has been closed.
+    Registration for Anjali has been closed.
+
+4. Incoming Call – Answered / Ended
+    Simulating the Incoming call & Declining the call
+
+Example:
+    #include<iostream>
+    using namespace std;
+
+    class Call {
+        string caller;
+
+    public:
+        Call(string callerName) {
+            caller = callerName;
+            cout << "Incoming call from: " << caller << " - Call Answered.\n";
+        }
+
+        void talk() {
+            cout << "Talking to " << caller << "...\n";
+        }
+
+        ~Call() {
+            cout << "Call with " << caller << " ended.\n";
+        }
+    };
+
+    int main() {
+        {
+            Call c1("Rohit Sharma");
+            c1.talk();
+        } // Destructor called here
+        return 0;
+    }
+
+Output:
+    Incoming call from: Rohit Sharma - Call Answered.
+    Talking to Rohit Sharma...
+    Call with Rohit Sharma ended.

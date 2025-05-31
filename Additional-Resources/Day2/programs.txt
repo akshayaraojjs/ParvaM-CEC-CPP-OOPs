@@ -1,0 +1,292 @@
+1. Class: Bus
+Real-life Scenario: Each bus has details like number, route, and capacity.
+
+#include<iostream>
+using namespace std;
+
+class Bus {
+public:
+    string busNumber;
+    string route;
+    int capacity;
+
+    void display() {
+        cout << "Bus Number: " << busNumber << endl;
+        cout << "Route: " << route << endl;
+        cout << "Capacity: " << capacity << " passengers" << endl;
+    }
+};
+
+int main() {
+    Bus b1;
+    b1.busNumber = "KA05 1234";
+    b1.route = "City Center to Airport";
+    b1.capacity = 40;
+
+    b1.display();
+    return 0;
+}
+
+Output:
+    Bus Number: KA05 1234
+    Route: City Center to Airport
+    Capacity: 40 passengers
+
+2. Class: Mobile
+Real-life Scenario: A mobile phone has a brand, model, and price.
+
+#include<iostream>
+using namespace std;
+
+class Mobile {
+public:
+    string brand;
+    string model;
+    float price;
+
+    void showDetails() {
+        cout << "Brand: " << brand << ", Model: " << model << ", Price: ₹" << price << endl;
+    }
+};
+
+int main() {
+    Mobile m1;
+    m1.brand = "Samsung";
+    m1.model = "Galaxy A14";
+    m1.price = 14999;
+
+    m1.showDetails();
+    return 0;
+}
+
+Output:
+    Brand: Samsung, Model: Galaxy A14, Price: ₹14999
+
+3. Class: Student
+Real-life Scenario: A student has name, roll number, and marks.
+
+#include<iostream>
+using namespace std;
+
+class Student {
+public:
+    string name;
+    int rollNo;
+    float marks;
+
+    void printInfo() {
+        cout << "Student: " << name << ", Roll No: " << rollNo << ", Marks: " << marks << "%" << endl;
+    }
+};
+
+int main() {
+    Student s1;
+    s1.name = "Riya";
+    s1.rollNo = 101;
+    s1.marks = 88.5;
+
+    s1.printInfo();
+    return 0;
+}
+
+Output:
+Student: Riya, Roll No: 101, Marks: 88.5%
+
+4. Class: BankAccount
+Real-life Scenario: A bank account has a name, account number, and balance. It supports deposit and withdraw.
+
+#include<iostream>
+using namespace std;
+
+class BankAccount {
+private:
+    string accountHolder;
+    int accountNumber;
+    float balance;
+
+public:
+    void setDetails(string name, int accNum, float bal) {
+        accountHolder = name;
+        accountNumber = accNum;
+        balance = bal;
+    }
+
+    void deposit(float amount) {
+        balance += amount;
+        cout << "Deposited ₹" << amount << ". New Balance: ₹" << balance << endl;
+    }
+
+    void withdraw(float amount) {
+        if (amount <= balance) {
+            balance -= amount;
+            cout << "Withdrawn ₹" << amount << ". Remaining Balance: ₹" << balance << endl;
+        } else {
+            cout << "Insufficient Balance!" << endl;
+        }
+    }
+
+    void display() {
+        cout << "Account Holder: " << accountHolder << ", Account No: " << accountNumber << ", Balance: ₹" << balance << endl;
+    }
+};
+
+int main() {
+    BankAccount b1;
+    b1.setDetails("Amit", 1001, 5000);
+    b1.display();
+
+    b1.deposit(2000);
+    b1.withdraw(1000);
+    b1.withdraw(7000);  // Insufficient balance
+    return 0;
+}
+
+Output:
+Account Holder: Amit, Account No: 1001, Balance: ₹5000
+Deposited ₹2000. New Balance: ₹7000
+Withdrawn ₹1000. Remaining Balance: ₹6000
+Insufficient Balance!
+
+5. Class: Clock
+Real-life Scenario: Represents time in hours, minutes, seconds.
+
+#include<iostream>
+using namespace std;
+
+class Clock {
+public:
+    int hours, minutes, seconds;
+
+    void setTime(int h, int m, int s) {
+        hours = h;
+        minutes = m;
+        seconds = s;
+    }
+
+    void showTime() {
+        cout << "Current Time: " << hours << ":" << minutes << ":" << seconds << endl;
+    }
+};
+
+int main() {
+    Clock c;
+    c.setTime(10, 45, 30);
+    c.showTime();
+    return 0;
+}
+
+Output:
+Current Time: 10:45:30
+
+Summary:
+
+| Real-Life Object | Class Name    | Key Members                      | Concepts Used            |
+| ---------------- | ------------- | -------------------------------- | ------------------------ |
+| Bus              | `Bus`         | `busNumber`, `route`, `capacity` | Object, `public` access  |
+| Phone            | `Mobile`      | `brand`, `model`, `price`        | Object creation, display |
+| Student          | `Student`     | `name`, `rollNo`, `marks`        | Class/Method             |
+| Bank Account     | `BankAccount` | `deposit()`, `withdraw()`        | `private` data, methods  |
+| Clock            | `Clock`       | `setTime()`, `showTime()`        | Function with parameters |
+--------------------------------------------------------------------------------------------------
+Access Modifier Programs:
+C++ programs to demonstrate access modifiers (public, private, and protected) and how their accessibility changes:
+    Access from inside the class
+    Access from object (main function)
+    Access from subclass (derived class)
+
+1. Access Modifier: public
+
+#include<iostream>
+using namespace std;
+
+class DemoPublic {
+public:
+    int x;
+
+    void setX(int val) {
+        x = val;
+    }
+
+    void showX() {
+        cout << "Value of x: " << x << endl;
+    }
+};
+
+int main() {
+    DemoPublic obj;
+    obj.x = 10;           // Allowed: public member
+    obj.showX();          // Allowed
+    return 0;
+}
+
+Output:
+Value of x: 10
+
+Access is allowed from outside the class and in subclass as well.
+
+2. Access Modifier: private
+
+#include<iostream>
+using namespace std;
+
+class DemoPrivate {
+private:
+    int secret;
+
+public:
+    void setSecret(int val) {
+        secret = val;
+    }
+
+    void showSecret() {
+        cout << "Secret: " << secret << endl;
+    }
+};
+
+int main() {
+    DemoPrivate obj;
+    // obj.secret = 10;       // Not Allowed: private member
+    obj.setSecret(10);        // Allowed via public method
+    obj.showSecret();
+    return 0;
+}
+
+Output:
+Secret: 10
+
+Cannot access private members directly via object or subclass.
+
+3. Access Modifier: protected with Inheritance
+
+#include<iostream>
+using namespace std;
+
+class Base {
+protected:
+    int protVar;
+
+public:
+    void setProtVar(int val) {
+        protVar = val;
+    }
+};
+
+class Derived : public Base {
+public:
+    void showProtVar() {
+        cout << "Accessed from Derived: " << protVar << endl; // ✅ Allowed in subclass
+    }
+};
+
+int main() {
+    Derived d;
+    // d.protVar = 5;         // Not Allowed directly from object
+    d.setProtVar(5);          // Allowed via public method
+    d.showProtVar();
+    return 0;
+}
+
+Output:
+Accessed from Derived: 5
+
+Protected members are accessible in derived class but not through object.

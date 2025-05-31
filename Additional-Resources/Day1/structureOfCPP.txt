@@ -1,0 +1,72 @@
+Structure of CPP (Procedural Programming):
+
+#include<iostream>  // Preprocessor directive
+using namespace std;  // Namespace to avoid std:: prefix
+
+// Function Declaration
+void greet();
+
+int main() {  // Entry point of the program
+    greet();  // Function call
+    return 0; // Exit code
+}
+
+// Function Definition
+void greet() {
+    cout << "Hello, World!";
+}
+
+Breakdown:
+
+| Part                   | Purpose                                                  |
+| ---------------------- | -------------------------------------------------------- |
+| `#include<iostream>`   | Includes input/output functionality (like `cout`, `cin`) |
+| `using namespace std;` | So we can use `cout` instead of `std::cout`              |
+| `main()`               | The program starts execution here                        |
+| `greet()`              | A user-defined function for modularity                   |
+| `return 0;`            | Indicates successful execution to the OS                 |
+-------------------------------------------------------------------------------------
+
+Structure of CPP (Object-Oriented Programming):
+
+#include<iostream>  // Preprocessor directive
+using namespace std;
+
+// Class Declaration
+class Greeter {
+public:
+    void greet() {  // Member function
+        cout << "Hello, OOP World!";
+    }
+};
+
+int main() {
+    Greeter obj;     // Object creation
+    obj.greet();     // Calling member function
+    return 0;
+}
+
+Breakdown:
+
+| Part                 | Purpose                                                |
+| -------------------- | ------------------------------------------------------ |
+| `#include<iostream>` | Input/Output stream                                    |
+| `class Greeter`      | Defines a class with related data/functions            |
+| `public:`            | Access specifier, allows access from outside the class |
+| `greet()`            | A method defined inside the class                      |
+| `Greeter obj;`       | Creates an object of the class                         |
+| `obj.greet();`       | Calls the method using the object                      |
+| `main()`             | Entry point for execution                              |
+| `return 0;`          | Terminates the program successfully                    |
+---------------------------------------------------------------------------------
+
+Difference:
+
+| Feature           | Procedural Style  | OOP Style                 |
+| ----------------- | ----------------- | ------------------------- |
+| Code Organization | Functions         | Classes and Objects       |
+| Data & Functions  | Separate          | Bundled together          |
+| Reusability       | Limited           | High (via inheritance)    |
+| Example Use Case  | Simple calculator | Student management system |
+| Modularity        | Function-based    | Class/object-based        |
+---------------------------------------------------------------------

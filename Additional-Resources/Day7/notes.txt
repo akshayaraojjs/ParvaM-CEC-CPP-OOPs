@@ -1,0 +1,119 @@
+1. What is a Pointer?
+    A pointer is a variable that stores the memory address of another variable.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int a = 10;
+    int* ptr = &a;  // ptr stores the address of variable a
+
+    cout << "Value of a: " << a << endl;
+    cout << "Address of a: " << &a << endl;
+    cout << "Value of ptr: " << ptr << endl;
+    cout << "Value pointed by ptr: " << *ptr << endl;
+
+    return 0;
+}
+
+ 2. this Pointer:
+What is this?
+    A keyword that points to the current object.
+    Useful to distinguish between local and member variables.
+
+#include <iostream>
+using namespace std;
+
+class Student {
+    int id;
+public:
+    void setID(int id) {
+        this->id = id;  // `this->id` is the class member, `id` is the parameter
+    }
+    void display() {
+        cout << "Student ID: " << id << endl;
+    }
+};
+
+int main() {
+    Student s1;
+    s1.setID(1001);
+    s1.display();
+}
+
+3. Dynamic Memory Allocation (new and delete)
+    
+For Single Object:
+
+#include <iostream>
+using namespace std;
+
+class Car {
+    string brand;
+public:
+    Car(string b) : brand(b) {}
+    void show() {
+        cout << "Car Brand: " << brand << endl;
+    }
+};
+
+int main() {
+    Car* c1 = new Car("Toyota");  // dynamically creating object
+    c1->show();
+
+    delete c1;  // free memory
+}
+
+For Array of Objects:
+
+#include <iostream>
+using namespace std;
+
+class Item {
+    string name;
+public:
+    void setName(string n) { name = n; }
+    void show() { cout << "Item: " << name << endl; }
+};
+
+int main() {
+    Item* arr = new Item[2];  // create array of 2 objects
+
+    arr[0].setName("Pen");
+    arr[1].setName("Book");
+
+    arr[0].show();
+    arr[1].show();
+
+    delete[] arr;  // free array memory
+}
+
+4. Pointers to Objects:
+
+#include <iostream>
+using namespace std;
+
+class Person {
+    string name;
+public:
+    void setName(string n) { name = n; }
+    void show() { cout << "Name: " << name << endl; }
+};
+
+int main() {
+    Person p;
+    Person* ptr = &p;  // pointer to object
+
+    ptr->setName("Alice");
+    ptr->show();
+}
+
+Summary:
+
+| Concept                  | Use Case                                |
+| ------------------------ | --------------------------------------- |
+| `int* ptr`               | Store address of int variable           |
+| `this` pointer           | Access current object's members         |
+| `new ClassName`          | Allocate object in heap memory          |
+| `delete` / `delete[]`    | Manually free heap memory               |
+| `Class* ptr = new Class` | Pointer to dynamically allocated object |

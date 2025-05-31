@@ -1,0 +1,243 @@
+1. Basics of Pointers:
+
+Program 1: Pointer to an int variable
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int x = 5;
+    int* p = &x;
+
+    cout << "x = " << x << endl;
+    cout << "Address of x = " << p << endl;
+    cout << "Value at address = " << *p << endl;
+}
+
+Program 2: Swapping two numbers using pointers
+
+#include <iostream>
+using namespace std;
+
+void swap(int* a, int* b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int main() {
+    int x = 10, y = 20;
+    swap(&x, &y);
+    cout << "x = " << x << ", y = " << y << endl;
+}
+
+Program 3: Pointer to float variable
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    float pi = 3.14;
+    float* ptr = &pi;
+
+    cout << "Pi = " << *ptr << endl;
+}
+-------------------------------------------------------
+2. this Pointer:
+
+Program 1: Resolve variable name conflict
+
+#include <iostream>
+using namespace std;
+
+class Box {
+    int length;
+public:
+    void setLength(int length) {
+        this->length = length;
+    }
+    void show() {
+        cout << "Length = " << length << endl;
+    }
+};
+
+int main() {
+    Box b;
+    b.setLength(12);
+    b.show();
+}
+
+Program 2: Returning object using this pointer
+
+#include <iostream>
+using namespace std;
+
+class Number {
+    int value;
+public:
+    Number(int v) {
+        this->value = v;
+    }
+
+    Number* getAddress() {
+        return this;
+    }
+
+    void show() {
+        cout << "Address: " << this << ", Value: " << value << endl;
+    }
+};
+
+int main() {
+    Number n(100);
+    n.show();
+    cout << "Returned Address: " << n.getAddress() << endl;
+}
+
+Program 3: Chain function calls
+
+#include <iostream>
+using namespace std;
+
+class Counter {
+    int count;
+public:
+    Counter() : count(0) {}
+    Counter* increment() {
+        count++;
+        return this;
+    }
+    void display() {
+        cout << "Count: " << count << endl;
+    }
+};
+
+int main() {
+    Counter c;
+    c.increment()->increment()->increment()->display();
+}
+-------------------------------------------------------
+3. Dynamic Memory Allocation:
+
+Program 1: Allocate and free integer dynamically
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int* ptr = new int;
+    *ptr = 50;
+    cout << "Value: " << *ptr << endl;
+    delete ptr;
+}
+
+Program 2: Dynamic array
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n = 3;
+    int* arr = new int[n];
+
+    for (int i = 0; i < n; i++) {
+        arr[i] = (i + 1) * 10;
+    }
+
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+
+    delete[] arr;
+}
+
+Program 3: Dynamic object
+
+#include <iostream>
+using namespace std;
+
+class Student {
+    string name;
+public:
+    Student(string n) : name(n) {}
+    void display() {
+        cout << "Name: " << name << endl;
+    }
+};
+
+int main() {
+    Student* s = new Student("John");
+    s->display();
+    delete s;
+}
+-------------------------------------------------------
+4. Pointers to Objects:
+
+Program 1: Pointer to a single object
+
+#include <iostream>
+using namespace std;
+
+class Car {
+    string brand;
+public:
+    void setBrand(string b) { brand = b; }
+    void show() { cout << "Brand: " << brand << endl; }
+};
+
+int main() {
+    Car c;
+    Car* ptr = &c;
+
+    ptr->setBrand("Honda");
+    ptr->show();
+}
+
+Program 2: Array of object pointers
+
+#include <iostream>
+using namespace std;
+
+class Book {
+    string title;
+public:
+    void setTitle(string t) { title = t; }
+    void display() { cout << "Book: " << title << endl; }
+};
+
+int main() {
+    Book* books[2];
+    books[0] = new Book();
+    books[1] = new Book();
+
+    books[0]->setTitle("C++ Basics");
+    books[1]->setTitle("OOP Concepts");
+
+    books[0]->display();
+    books[1]->display();
+
+    delete books[0];
+    delete books[1];
+}
+
+Program 3: Pointer passed to function
+
+#include <iostream>
+using namespace std;
+
+class Laptop {
+    string model;
+public:
+    Laptop(string m) : model(m) {}
+    void show() { cout << "Laptop Model: " << model << endl; }
+};
+
+void printDetails(Laptop* l) {
+    l->show();
+}
+
+int main() {
+    Laptop l("Dell XPS");
+    printDetails(&l);
+}
+-------------------------------------------------------

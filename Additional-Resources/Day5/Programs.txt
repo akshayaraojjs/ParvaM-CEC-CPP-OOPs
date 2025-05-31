@@ -1,0 +1,194 @@
+SINGLE INHERITANCE:
+
+Program 1: Employee Information
+
+#include <iostream>
+using namespace std;
+
+class Employee {
+public:
+    string name;
+    int empID;
+
+    void getDetails(string n, int id) {
+        name = n;
+        empID = id;
+    }
+
+    void displayDetails() {
+        cout << "Name: " << name << ", ID: " << empID << endl;
+    }
+};
+
+class Developer : public Employee {
+public:
+    void displayRole() {
+        cout << "Role: Developer" << endl;
+    }
+};
+
+int main() {
+    Developer dev;
+    dev.getDetails("Alice", 1001);
+    dev.displayDetails();
+    dev.displayRole();
+}
+
+Program 2: Vehicle Example
+
+#include <iostream>
+using namespace std;
+
+class Vehicle {
+public:
+    void start() {
+        cout << "Vehicle Started" << endl;
+    }
+};
+
+class Car : public Vehicle {
+public:
+    void drive() {
+        cout << "Car is being driven" << endl;
+    }
+};
+
+int main() {
+    Car c;
+    c.start();
+    c.drive();
+}
+
+Program 3: Student Performance
+
+#include <iostream>
+using namespace std;
+
+class Student {
+public:
+    string name;
+    void setName(string n) {
+        name = n;
+    }
+};
+
+class Result : public Student {
+public:
+    int marks;
+
+    void setMarks(int m) {
+        marks = m;
+    }
+
+    void display() {
+        cout << name << " scored " << marks << " marks." << endl;
+    }
+};
+
+int main() {
+    Result r;
+    r.setName("John");
+    r.setMarks(88);
+    r.display();
+}
+
+MULTILEVEL INHERITANCE
+
+Program 1: Device → Computer → Laptop
+
+#include <iostream>
+using namespace std;
+
+class Device {
+public:
+    void powerOn() {
+        cout << "Device is powered on" << endl;
+    }
+};
+
+class Computer : public Device {
+public:
+    void compute() {
+        cout << "Computer is computing" << endl;
+    }
+};
+
+class Laptop : public Computer {
+public:
+    void portable() {
+        cout << "Laptop is portable" << endl;
+    }
+};
+
+int main() {
+    Laptop l;
+    l.powerOn();
+    l.compute();
+    l.portable();
+}
+
+Program 2: LivingBeing → Animal → Dog
+
+#include <iostream>
+using namespace std;
+
+class LivingBeing {
+public:
+    void breathe() {
+        cout << "Breathing..." << endl;
+    }
+};
+
+class Animal : public LivingBeing {
+public:
+    void move() {
+        cout << "Animal moves" << endl;
+    }
+};
+
+class Dog : public Animal {
+public:
+    void bark() {
+        cout << "Dog barks" << endl;
+    }
+};
+
+int main() {
+    Dog d;
+    d.breathe();
+    d.move();
+    d.bark();
+}
+
+Program 3: Person → Teacher → PhysicsTeacher
+
+#include <iostream>
+using namespace std;
+
+class Person {
+public:
+    void identity() {
+        cout << "I am a person" << endl;
+    }
+};
+
+class Teacher : public Person {
+public:
+    void teach() {
+        cout << "I teach students" << endl;
+    }
+};
+
+class PhysicsTeacher : public Teacher {
+public:
+    void subject() {
+        cout << "I teach Physics" << endl;
+    }
+};
+
+int main() {
+    PhysicsTeacher pt;
+    pt.identity();
+    pt.teach();
+    pt.subject();
+}

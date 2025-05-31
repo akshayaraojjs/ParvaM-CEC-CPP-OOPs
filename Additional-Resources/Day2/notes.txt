@@ -1,0 +1,149 @@
+1. Defining and Declaring Classes
+
+What is a Class?
+    A class is a user-defined blueprint that groups data members (variables) and member functions (methods) together.
+
+Syntax:
+    class ClassName {
+        // data members
+        // member functions
+    };
+
+Example:
+    #include<iostream>
+    using namespace std;
+
+    class Car {
+    public:
+        string brand;
+        int year;
+
+        void display() {
+            cout << "Brand: " << brand << ", Year: " << year << endl;
+        }
+    };
+
+    int main() {
+        Car c1;  // Object creation
+        c1.brand = "Toyota";
+        c1.year = 2020;
+        c1.display();
+        return 0;
+    }
+
+Output: Brand: Toyota, Year: 2020
+
+2. Access Modifiers: public, private, and protected
+
+| Modifier    | Accessed From Class? | Accessed From Object? | Accessed From Subclass? |
+| ----------- | -------------------- | --------------------- | ----------------------- |
+| `public`    |          Yes         |           Yes         |           Yes           |
+| `private`   |          Yes         |           No          |           No            |
+| `protected` |          Yes         |           No          |           Yes           |
+
+Example:
+    #include<iostream>
+    using namespace std;
+
+    class Student {
+    private:
+        int rollNumber;  // private member
+
+    public:
+        string name;
+
+        void setRollNumber(int r) {
+            rollNumber = r;
+        }
+
+        void display() {
+            cout << "Name: " << name << ", Roll Number: " << rollNumber << endl;
+        }
+    };
+
+    int main() {
+        Student s1;
+        s1.name = "Alice";
+        // s1.rollNumber = 101; // ❌ Error: private access
+        s1.setRollNumber(101);
+        s1.display();
+        return 0;
+    }
+
+Output: Name: Alice, Roll Number: 101
+
+3. Object Instantiation (Creating Objects)
+
+Syntax:
+    ClassName objectName;
+
+Example: 
+    class Box {
+    public:
+        int length;
+        int width;
+        void area() {
+            cout << "Area = " << length * width << endl;
+        }
+    };
+
+    int main() {
+        Box b1;  // Object instantiation
+        b1.length = 10;
+        b1.width = 5;
+        b1.area();
+        return 0;
+    }
+
+Output: Area = 50
+
+4. Scope Resolution Operator ::
+    -> Used to define member functions outside the class or access global variables/functions.
+
+Example 1: Function defined outside the class
+
+#include<iostream>
+using namespace std;
+
+class Demo {
+public:
+    void show();  // Function declared inside
+};
+
+// Function defined outside using ::
+void Demo::show() {
+    cout << "Function defined outside the class using scope resolution operator." << endl;
+}
+
+int main() {
+    Demo d;
+    d.show();
+    return 0;
+}
+
+Output: Function defined outside the class using scope resolution operator.
+
+Example 2: Access global variable when local variable has same name
+
+#include<iostream>
+using namespace std;
+
+int value = 100; // Global variable
+
+int main() {
+    int value = 50; // Local variable
+    cout << "Local value: " << value << endl;
+    cout << "Global value: " << ::value << endl; // Using scope resolution
+    return 0;
+}
+
+Output: Local value: 50  Global value: 100
+
+Summary:
+
+| Concept                   | Description                                                  |
+| ------------------------- | ------------------------------------------------------------ |
+| Class                     | A template that binds variables and functions                |
+| Object                    | Instance of a class                                          |
+| Access Modifiers          | Control visibility (public/private/protected)                |
+| Scope Resolution Operator | Defines functions outside class or accesses global variables |

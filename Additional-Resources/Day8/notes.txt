@@ -1,0 +1,261 @@
+1. File Handling Basics in C++
+
+File handling in C++ is done using:
+    <fstream> header which contains:
+    ifstream – for input file stream (reading files)
+    ofstream – for output file stream (writing files)
+    fstream – for both reading and writing
+
+Syntax for Opening and Closing Files:
+
+#include <fstream>
+using namespace std;
+
+ifstream inFile;
+inFile.open("data.txt");
+
+// Do file operations...
+
+inFile.close();
+---------------------------------------------------------------
+2. Reading and Writing to Text Files
+
+Example:
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main() {
+    ofstream out("info.txt"); // Open for writing
+    out << "Hello Students!\nWelcome to File Handling.";
+    out.close();
+
+    ifstream in("info.txt");  // Open for reading
+    string line;
+    while (getline(in, line)) {
+        cout << line << endl;
+    }
+    in.close();
+}
+
+What are fin, fout, inFile, out?
+    These are just user-defined variable names or objects of file stream classes from the C++ <fstream> library:
+
+Example: Using fin and fout
+
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main() {
+    ofstream fout("data.txt"); // fout = file output stream
+    fout << "Hello, World!" << endl;
+    fout.close(); // Close output file
+
+    ifstream fin("data.txt"); // fin = file input stream
+    string line;
+    getline(fin, line);
+    cout << "From file: " << line << endl;
+    fin.close(); // Close input file
+}
+
+Explanation:
+    fout writes to a file.
+    fin reads from the file.
+    fout and fin are variable names
+
+Example: Using inFile and outFile
+
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main() {
+    ofstream outFile("info.txt");
+    outFile << "C++ File Handling Example";
+    outFile.close();
+
+    ifstream inFile("info.txt");
+    string content;
+    getline(inFile, content);
+    cout << "Read: " << content << endl;
+    inFile.close();
+}
+
+Explanation:
+    outFile is more descriptive than just fout
+    inFile is used instead of fin — makes the code easier to understand
+
+| Variable | Class      | Purpose                                     |
+| -------- | ---------- | ------------------------------------------- |
+| `fin`    | `ifstream` | Input file stream (reading)                 |
+| `fout`   | `ofstream` | Output file stream (writing)                |
+| `inFile` | `ifstream` | Same as `fin`, just a more descriptive name |
+| `out`    | `ofstream` | Same as `fout`, a more descriptive name     |
+---------------------------------------------------------------
+3. Text-based Files & Functions
+
+| Function                | Purpose                                   |
+| ----------------------- | ----------------------------------------- |
+| `.get()`                | Reads single character (including spaces) |
+| `.getline()`            | Reads a whole line                        |
+| `.put()`                | Writes a character                        |
+| `.seekg()` / `.seekp()` | Move file pointer to a position           |
+| `.tellg()` / `.tellp()` | Tell current position                     |
+| `.eof()`                | Checks if end of file is reached          |
+| `.open()`               | Opens file                                |
+| `.close()`              | Closes file                               |
+
+Example: Using get(), getline(), put()
+
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main() {
+    ofstream fout("note.txt");
+    fout.put('H');
+    fout << "ello World!";
+    fout.close();
+
+    ifstream fin("note.txt");
+    char ch;
+    fin.get(ch);
+    cout << "First char: " << ch << endl;
+
+    string msg;
+    getline(fin, msg);
+    cout << "Remaining: " << msg << endl;
+
+    fin.close();
+}
+
+Using seekg(), tellg(), eof()
+
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main() {
+    ifstream fin("note.txt");
+
+    fin.seekg(0, ios::end);     // Go to end
+    int size = fin.tellg();     // Get current position
+    cout << "File size: " << size << " bytes" << endl;
+
+    fin.seekg(0);               // Go back to start
+    char ch;
+    while (!fin.eof()) {
+        fin.get(ch);
+        cout << ch;
+    }
+
+    fin.close();
+}
+
+File Opening Modes:
+
+| Mode          | Description                 |
+| ------------- | --------------------------- |
+| `ios::in`     | Open for reading            |
+| `ios::out`    | Open for writing            |
+| `ios::app`    | Append at the end           |
+| `ios::ate`    | Start at end, allow editing |
+| `ios::trunc`  | Delete content if exists    |
+| `ios::binary` | Open in binary mode         |
+
+Example:
+    fstream file("data.txt", ios::in | ios::out | ios::app);
+---------------------------------------------------------------
+4. Files with Objects (.dat files)    
+    You can store and retrieve entire objects using write() and read() (in binary format).
+
+Example: Writing and Reading Object in .dat File
+
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+class Student {
+    int roll;
+    char name[20];
+public:
+    void getData() {
+        cout << "Enter Roll No & Name: ";
+        cin >> roll >> ws;
+        cin.getline(name, 20);
+    }
+    void showData() {
+        cout << "Roll: " << roll << ", Name: " << name << endl;
+    }
+};
+
+int main() {
+    Student s;
+
+    ofstream fout("students.dat", ios::binary);
+    s.getData();
+    fout.write((char*)&s, sizeof(s));
+    fout.close();
+
+    Student s2;
+    ifstream fin("students.dat", ios::binary);
+    fin.read((char*)&s2, sizeof(s2));
+    s2.showData();
+    fin.close();
+}
+---------------------------------------------------------------
+Exception Handling Basics:
+
+Syntax:
+    try {
+    // Code that might throw exception
+    }
+    catch (type var) {
+    // Handle exception
+    }
+
+Example: Divide by Zero Exception
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int a, b;
+    cout << "Enter two numbers: ";
+    cin >> a >> b;
+    
+    try {
+        if (b == 0) throw "Division by zero!";
+        cout << "Result = " << a / b << endl;
+    } catch (const char* msg) {
+        cout << "Error: " << msg << endl;
+    }
+}
+
+Example: Handling File Opening Error
+
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main() {
+    ifstream fin("missing.txt");
+    try {
+        if (!fin) throw runtime_error("File not found!");
+        string line;
+        getline(fin, line);
+        cout << line << endl;
+    } catch (runtime_error &e) {
+        cout << "Exception: " << e.what() << endl;
+    }
+}
+
+Summary:
+
+| Concept            | C++ Tools/Functions Used                       |
+| ------------------ | ---------------------------------------------- |
+| Text File Handling | `ifstream`, `ofstream`                         |
+| File Functions     | `.get()`, `.getline()`, `.seekg()`, `.tellg()` |
+| Binary Object File | `.write()`, `.read()`                          |
+| Exception Handling | `try`, `catch`, `throw`                        |

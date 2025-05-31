@@ -1,0 +1,241 @@
+1. Constructor Basics
+
+What is a Constructor?
+    A constructor is a special function in a class that is automatically called when an object is created. It is used to initialize objects.
+
+Rules:
+    It has same name as the class.
+    It has no return type (not even void).
+    Can be default, parameterized, or copy constructor.
+
+A. Default Constructor
+    Initializes data members with default or fixed values.
+
+Example:
+    #include<iostream>
+    using namespace std;
+
+    class Student {
+    public:
+        Student() {
+            cout << "Default Constructor Called!" << endl;
+        }
+    };
+
+    int main() {
+        Student s1;  // Constructor automatically called
+        return 0;
+    }
+
+Output:
+    Default Constructor Called!
+
+B. Parameterized Constructor
+    Takes arguments to initialize values during object creation.
+
+Example:
+    #include<iostream>
+    using namespace std;
+
+    class Student {
+    public:
+        string name;
+        int age;
+
+        Student(string n, int a) {
+            name = n;
+            age = a;
+        }
+
+        void display() {
+            cout << "Name: " << name << ", Age: " << age << endl;
+        }
+    };
+
+    int main() {
+        Student s1("Ravi", 20);
+        s1.display();
+        return 0;
+    }
+
+Output:
+    Name: Ravi, Age: 20
+
+C. Copy Constructor
+    Creates a new object by copying values from an existing object.
+
+Example:
+    #include<iostream>
+    using namespace std;
+
+    class Student {
+    public:
+        string name;
+        int age;
+
+        Student(string n, int a) {
+            name = n;
+            age = a;
+        }
+
+        // Copy Constructor
+        Student(const Student &s) {
+            name = s.name;
+            age = s.age;
+        }
+
+        void display() {
+            cout << "Name: " << name << ", Age: " << age << endl;
+        }
+    };
+
+    int main() {
+        Student s1("Amit", 22);
+        Student s2 = s1;  // Calls copy constructor
+        s2.display();
+        return 0;
+    }
+
+Output:
+    Name: Amit, Age: 22
+
+Why Constructor Cannot Be Static?
+    A static function belongs to the class, not to an object.
+    But constructor is called automatically when an object is created.
+    So, if a constructor were static, it wouldn’t be able to initialize non-static members, which defeats its purpose.
+
+Why Constructor Has No Return Type?
+    It does not return any value, not even void.
+    Its job is to initialize, not to return data.
+    Returning a value from a constructor would conflict with the object creation mechanism of C++.
+
+2. Destructor Basics
+    
+What is a Destructor?
+    Destructor is used to clean up resources when an object goes out of scope.
+    Syntax: ~ClassName()
+    Called automatically at the end of the program or when an object is deleted.
+
+Example:
+    #include<iostream>
+    using namespace std;
+
+    class Student {
+    public:
+        Student() {
+            cout << "Constructor Called!" << endl;
+        }
+
+        ~Student() {
+            cout << "Destructor Called!" << endl;
+        }
+    };
+
+    int main() {
+        Student s1;
+        return 0;
+    }
+
+Output:
+    Constructor Called!
+    Destructor Called!
+
+3. Constructor Overloading
+    You can define multiple constructors with different parameters.
+
+Example:
+    #include<iostream>
+    using namespace std;
+
+    class Rectangle {
+        int length, breadth;
+
+    public:
+        Rectangle() {  // Default
+            length = 0;
+            breadth = 0;
+        }
+
+        Rectangle(int l) {  // One parameter
+            length = l;
+            breadth = l;
+        }
+
+        Rectangle(int l, int b) {  // Two parameters
+            length = l;
+            breadth = b;
+        }
+
+        void area() {
+            cout << "Area: " << length * breadth << endl;
+        }
+    };
+
+    int main() {
+        Rectangle r1;
+        Rectangle r2(5);
+        Rectangle r3(4, 6);
+
+        r1.area();  // 0
+        r2.area();  // 25
+        r3.area();  // 24
+        return 0;
+    }
+
+Output:
+    Area: 0
+    Area: 25
+    Area: 24
+
+Summary:
+
+| Concept                 | Purpose                           | Automatically Called? | Customizable? |
+| ----------------------- | --------------------------------- | --------------------- | ------------- |
+| Default Constructor     | Initializes with default values   | Yes                   | Yes           |
+| Parameterized           | Initializes with given arguments  | Yes                   | Yes           |
+| Copy Constructor        | Creates a copy of existing object | Yes (in some cases)   | Yes           |
+| Destructor              | Frees memory/resources            | Yes                   | Yes           |
+
+4. Importance of Destructors in Memory Management
+    In C++, a destructor is a special member function that is automatically invoked when an object goes out of scope or is explicitly deleted. It plays a crucial role in freeing up resources and ensuring efficient memory management.
+
+Why Destructors Are Important:
+1. Automatic Cleanup
+    Destructors are called automatically when:
+        An object goes out of scope (e.g., end of a function)
+        delete is used on a dynamically allocated object
+    This ensures that allocated memory and resources are released, even if the programmer forgets.
+
+2. Prevent Memory Leaks
+    If an object dynamically allocates memory (e.g., using new), that memory must be freed using delete.
+    A destructor ensures that cleanup happens even if the program exits unexpectedly or the object goes out of scope.
+
+When Destructors Are Most Useful:
+
+| Situation                    | Destructor Use                           |
+| ---------------------------- | ---------------------------------------- |
+| Dynamic memory (`new`)       | Free memory using `delete` or `delete[]` |
+| File handling                | Close file pointers                      |
+| Database/network connections | Release connections                      |
+| Logging/debugging            | Track when an object is destroyed        |
+| Resource-bound classes       | Handle deallocation cleanly              |
+
+What Happens If You Don’t Use a Destructor?
+    Memory Leaks: Memory is allocated but never freed.
+    File Descriptors Leak: Files or sockets remain open.
+    Resource Exhaustion: The system runs out of memory or handles over time.
+    Unstable Programs: Behavior becomes unpredictable, especially in long-running applications.
+
+Real-life Example:
+    Constructor: You book a hotel room and get the key.
+    Destructor: You check out, return the key, and room is cleaned for the next guest.
+
+Summary:
+
+| Concept              | Description                                                   |
+| -------------------- | ------------------------------------------------------------- |
+| Purpose              | Cleanup resources and memory used by the object               |
+| Called Automatically | Yes, when object is destroyed                                 |
+| Defined With         | `~ClassName()`                                                |
+| Custom Code          | Yes, especially when dynamic allocation or file/resource used |
+| Paired With          | Constructors (setup) → Destructors (teardown)                 |

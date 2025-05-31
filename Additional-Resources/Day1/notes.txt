@@ -1,0 +1,211 @@
+1. Introduction to OOP
+Definition:
+    Object-Oriented Programming (OOP) is a programming paradigm based on the concept of "objects", which contain both data and functions. The goal is to structure code in a way that models real-world entities.
+
+Real-life Example:
+    Think of a Car:
+        Data: Brand, Model, Color, Speed
+        Functions: Start(), Stop(), Accelerate()
+In OOP, we represent a car as an object, and its properties and actions are encapsulated in a class.
+
+2. Difference between Procedural and OOP
+
+| Feature          | Procedural Programming          | Object-Oriented Programming         |
+| ---------------- | ------------------------------- | ----------------------------------- |
+| Approach         | Follows a top-down approach     | Follows a bottom-up approach        |
+| Focus            | Focuses on functions/procedures | Focuses on objects                  |
+| Code Reusability | Less                            | High due to classes and inheritance |
+| Example Language | C                               | C++, Java, Python (OOP style)       |
+| Data Security    | Low (global data)               | High (via encapsulation)            |
+
+Example:
+    Procedural: You write calculateSalary() and pass parameters each time.
+    OOP: You create an Employee object with built-in calculateSalary().
+
+3. Key OOP Concepts
+a) Class:
+    A blueprint for creating objects. It defines properties (data) and methods (functions).
+
+Example Program:
+
+    class Car {
+    public:
+        string brand;
+        void start() {
+            cout << "Car started!";
+        }
+    };
+
+b) Object:
+    An instance of a class.
+
+Example Program:
+
+    Car myCar;
+    myCar.brand = "Toyota";
+    myCar.start();
+
+c) Encapsulation:
+    Wrapping data and methods into one unit (class), and restricting access using access specifiers (private, public).
+
+Real-life Example:  
+    A bank account hides balance details from direct access.
+
+Example Program:
+
+    class BankAccount {
+    private:
+        int balance;
+
+    public:
+        void deposit(int amount) {
+            balance += amount;
+        }
+        int getBalance() {
+            return balance;
+        }
+    };
+
+d) Inheritance:
+    One class (child) inherits properties and methods of another class (parent).
+
+Real-life Example: 
+    A Dog is an Animal – it inherits characteristics.
+
+Example Program:
+
+    class Animal {
+    public:
+        void eat() {
+            cout << "Eating...";
+        }
+    };
+
+    class Dog : public Animal {
+    public:
+        void bark() {
+            cout << "Barking...";
+        }
+    };
+
+e) Polymorphism:
+    Means many forms – the same function behaves differently based on context.
+
+Compile-time (Function Overloading)
+
+Example Program:
+
+    class Print {
+    public:
+        void show(int i) {
+            cout << "Integer: " << i;
+        }
+        void show(string s) {
+            cout << "String: " << s;
+        }
+    };
+
+Run-time (Function Overriding with Inheritance)
+
+Example Program:
+
+    class Animal {
+    public:
+        virtual void sound() {
+            cout << "Some sound";
+        }
+    };
+
+    class Cat : public Animal {
+    public:
+        void sound() override {
+            cout << "Meow";
+        }
+    };
+
+4. Abstraction
+Definition:
+    Hiding complex implementation details and showing only the necessary features.
+
+Real-life Example:
+    When you use a TV remote, you press buttons without knowing the internal circuit.
+
+In C++:
+    Use abstract class (class with at least one pure virtual function):
+
+Example Program:
+
+    class Shape {
+    public:
+        virtual void draw() = 0; // Pure virtual function
+    };
+
+    class Circle : public Shape {
+    public:
+        void draw() override {
+            cout << "Drawing Circle";
+        }
+    };
+
+5. Basic Structure of a C++ Program
+
+Example Program:
+
+    #include<iostream>  // Header file
+    using namespace std;
+
+    class MyClass {     // Class definition
+    public:
+        void display() {
+            cout << "Hello, OOP!";
+        }
+    };
+
+    int main() {        // Main function
+        MyClass obj;    // Object creation
+        obj.display();  // Calling method
+        return 0;
+    }
+
+-> #include<iostream>: Includes the standard I/O library.
+-> using namespace std;: Avoids writing std:: repeatedly.
+-> class: Defines a class.
+-> main(): Entry point of the program.
+-> return 0;: Ends the program.
+
+6. Class and Object Syntax
+
+Class Syntax:
+Example Program:
+
+    class Student {
+    public:
+        string name;
+        int age;
+
+        void display() {
+            cout << "Name: " << name << ", Age: " << age;
+        }
+    };
+
+Object Creation and Access:
+Example Program:
+
+    int main() {
+        Student s1;
+        s1.name = "John";
+        s1.age = 18;
+        s1.display();
+        return 0;
+    }
+
+Summary:
+
+| Concept       | Real-Life Example          | Purpose in C++                   |
+| ------------- | -------------------------- | -------------------------------- |
+| Class         | Blueprint of a car         | Defines structure and behavior   |
+| Object        | A specific car (e.g., BMW) | Instance of a class              |
+| Encapsulation | Bank account security      | Hides sensitive data             |
+| Inheritance   | Father → Son traits        | Code reusability                 |
+| Polymorphism  | A button: Play/Pause/Stop  | One name, multiple behaviors     |
+| Abstraction   | Using a coffee machine     | Hides complexity, shows features |

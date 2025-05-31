@@ -1,0 +1,290 @@
+1. Encapsulation in C++
+Definition:
+    Encapsulation is the concept of wrapping data (variables) and the methods (functions) that operate on the data into a single unit (class), and restricting direct access to some of the object's components.
+    Think of it as putting all the important variables and methods in a secure capsule (class).
+
+Key Principle:
+    Data should not be accessed directly from outside the class.
+    Use private or protected access specifiers to hide data.
+    Use public methods (getters & setters) to access/modify the data safely.
+
+Example:
+    #include<iostream>
+    using namespace std;
+
+    class Student {
+    private:
+        int rollNumber;     // hidden data
+        string name;
+
+    public:
+        // Setter methods (to set values)
+        void setRollNumber(int r) {
+            rollNumber = r;
+        }
+
+        void setName(string n) {
+            name = n;
+        }
+
+        // Getter methods (to get values)
+        int getRollNumber() {
+            return rollNumber;
+        }
+
+        string getName() {
+            return name;
+        }
+    };
+
+    int main() {
+        Student s1;
+
+        s1.setRollNumber(101);  // set values via setters
+        s1.setName("Amit");
+
+        cout << "Student Roll No: " << s1.getRollNumber() << endl;
+        cout << "Student Name: " << s1.getName() << endl;
+
+        return 0;
+    }
+
+Output:
+    Student Roll No: 101
+    Student Name: Amit
+
+Why use Encapsulation?
+    Data protection from unauthorized access
+    Easy to maintain and modify code
+    Prevent misuse of data
+    Allows validation through setters (e.g., not allowing negative age)
+
+2. Getters and Setters
+Definition:
+    These are public methods that are used to:
+        Get (access) private data: getters
+        Set (modify) private data: setters
+    They help enforce rules (e.g., not setting age < 0) and keep the data safe.
+
+Example:
+    #include<iostream>
+    using namespace std;
+
+    class BankAccount {
+    private:
+        int balance;
+
+    public:
+        void setBalance(int b) {
+            if(b >= 0)
+                balance = b;
+            else
+                cout << "Invalid balance amount!" << endl;
+        }
+
+        int getBalance() {
+            return balance;
+        }
+    };
+
+    int main() {
+        BankAccount b1;
+        b1.setBalance(5000);         // valid
+        cout << "Balance: ₹" << b1.getBalance() << endl;
+
+        b1.setBalance(-200);         // invalid
+        cout << "Balance: ₹" << b1.getBalance() << endl;
+
+        return 0;
+    }
+
+Output:
+    Balance: ₹5000
+    Invalid balance amount!
+    Balance: ₹5000
+
+3. Abstraction in C++
+Definition:
+    Abstraction means showing only essential details and hiding complex implementation from the user.
+    Or
+    Abstraction is the concept of hiding complex implementation details and showing only the essential features to the user.
+    
+    In C++, this is achieved through:
+        Classes
+        Access specifiers (private, protected, public)
+        Functions that expose only what is necessary
+
+Real-time Example:
+    Think of driving a car:
+        You use the steering wheel, accelerator, and brakes.
+        You don’t need to know how the engine works.
+
+Difference between Encapsulation vs Abstraction
+
+| Feature        | Encapsulation                           | Abstraction                            |
+| -------------- | --------------------------------------- | -------------------------------------- |
+| Purpose        | Hide data                               | Hide implementation details            |
+| Focus          | Security of data                        | Simplification for the user            |
+| Achieved using | `private`, `protected`, getters/setters | Classes, inheritance, abstract classes |
+
+Example: 
+    #include<iostream>
+    using namespace std;
+
+    class MessageSender {
+    public:
+        void sendMessage(string msg) {
+            connectToServer();
+            encryptMessage(msg);
+            cout << "Sending: " << msg << endl;
+        }
+
+    private:
+        void connectToServer() {
+            cout << "Connecting to server...\n";
+        }
+
+        void encryptMessage(string msg) {
+            cout << "Encrypting message...\n";
+        }
+    };
+
+    int main() {
+        MessageSender ms;
+        ms.sendMessage("Hello World!");
+        return 0;
+    }
+
+Output:
+    Connecting to server...
+    Encrypting message...
+    Sending: Hello World!
+
+Summary:
+
+| Concept             | Key Point                              | Example                                    |
+| ------------------- | -------------------------------------- | ------------------------------------------ |
+| Encapsulation       | Hides data using `private`             | Student class with `rollNumber`, `name`    |
+| Getters/Setters     | Public access to private data          | `getName()`, `setName()`                   |
+| Abstraction         | Hides complexity, shows only interface | `sendMessage()` hides `connect`, `encrypt` |
+-------------------------------------------------------------------------------------------------------------
+
+Example 1: 
+
+Bank ATM Interface
+    Real-world logic: You can withdraw money without knowing how the ATM verifies your pin, checks your balance, or updates the database.
+
+#include <iostream>
+using namespace std;
+
+class ATM {
+private:
+    int balance = 5000;
+
+    bool verifyPIN(int pin) {
+        return pin == 1234;
+    }
+
+public:
+    void withdraw(int pin, int amount) {
+        if (verifyPIN(pin)) {
+            if (amount <= balance) {
+                balance -= amount;
+                cout << "Withdrawal successful. Remaining balance: " << balance << endl;
+            } else {
+                cout << "Insufficient balance." << endl;
+            }
+        } else {
+            cout << "Invalid PIN." << endl;
+        }
+    }
+};
+
+int main() {
+    ATM atm;
+    atm.withdraw(1234, 1000);  // only essential interaction shown
+    return 0;
+}
+
+Abstraction: User sees only withdraw()—not the logic for PIN verification or balance checks.
+
+Example 2: 
+
+Car Driving System
+    Real-world logic: You drive a car using a steering wheel, brake, and accelerator. You don't manage the engine or fuel system directly.
+
+#include <iostream>
+using namespace std;
+
+class Car {
+private:
+    void igniteEngine() {
+        cout << "Engine started." << endl;
+    }
+
+    void fuelInjection() {
+        cout << "Fuel injected." << endl;
+    }
+
+public:
+    void drive() {
+        igniteEngine();
+        fuelInjection();
+        cout << "Car is moving..." << endl;
+    }
+};
+
+int main() {
+    Car myCar;
+    myCar.drive();  // only exposed feature
+    return 0;
+}
+
+Abstraction: The user only interacts with drive(), hiding the engine and fuel logic.
+
+Example 3: 
+
+Coffee Machine
+    Real-world logic: Pressing a button gets you coffee. You don’t know the internal workings—heating, filtering, etc.
+
+#include <iostream>
+using namespace std;
+
+class CoffeeMachine {
+private:
+    void grindBeans() {
+        cout << "Grinding beans..." << endl;
+    }
+
+    void boilWater() {
+        cout << "Boiling water..." << endl;
+    }
+
+    void brewCoffee() {
+        cout << "Brewing coffee..." << endl;
+    }
+
+public:
+    void makeCoffee() {
+        grindBeans();
+        boilWater();
+        brewCoffee();
+        cout << "Your coffee is ready!" << endl;
+    }
+};
+
+int main() {
+    CoffeeMachine cm;
+    cm.makeCoffee();  // only this is exposed
+    return 0;
+}
+
+Abstraction: The user only calls makeCoffee()—the rest is hidden.
+
+Summary:
+
+| Use Case       | Abstraction Method | Hidden Details                     |
+| -------------- | ------------------ | ---------------------------------- |
+| ATM            | `withdraw()`       | PIN verification, balance check    |
+| Car            | `drive()`          | Engine ignition, fuel injection    |
+| Coffee Machine | `makeCoffee()`     | Grinding, boiling, brewing process |

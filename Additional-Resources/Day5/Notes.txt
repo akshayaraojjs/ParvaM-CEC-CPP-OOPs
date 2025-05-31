@@ -1,0 +1,197 @@
+1. What is Inheritance?
+Inheritance allows a class (derived class) to acquire the properties and behaviors (methods) of another class (base class).
+It promotes code reusability, extensibility, and hierarchical classification.
+
+2. Types of Inheritance in C++:
+1. Single Inheritance:
+One derived class inherits from one base class.
+
+class Animal {
+protected:
+    string sound = "Some sound";
+
+public:
+    void speak() {
+        cout << "Animal says: " << sound << endl;
+    }
+};
+
+class Dog : public Animal {
+public:
+    void bark() {
+        cout << "Dog barks: Woof!" << endl;
+    }
+};
+
+int main() {
+    Dog d;
+    d.speak();  // inherited from Animal
+    d.bark();
+}
+
+2. Multilevel Inheritance:
+A class inherits from a derived class which itself inherits from another class.
+
+class LivingBeing {
+protected:
+    string status = "Alive";
+};
+
+class Animal : public LivingBeing {
+public:
+    void showStatus() {
+        cout << "Animal is " << status << endl;
+    }
+};
+
+class Dog : public Animal {
+public:
+    void bark() {
+        cout << "Dog says Woof!" << endl;
+    }
+};
+
+int main() {
+    Dog d;
+    d.showStatus();  // Accessing from base of base
+    d.bark();
+}
+
+3. Hierarchical Inheritance:
+Multiple classes inherit from the same base class.
+
+class Vehicle {
+public:
+    void start() {
+        cout << "Vehicle started" << endl;
+    }
+};
+
+class Car : public Vehicle {
+public:
+    void carFeature() {
+        cout << "Car has AC" << endl;
+    }
+};
+
+class Bike : public Vehicle {
+public:
+    void bikeFeature() {
+        cout << "Bike has helmet storage" << endl;
+    }
+};
+
+4. Multiple Inheritance:
+A class inherits from two or more base classes.
+
+class Printer {
+public:
+    void print() {
+        cout << "Printing..." << endl;
+    }
+};
+
+class Scanner {
+public:
+    void scan() {
+        cout << "Scanning..." << endl;
+    }
+};
+
+class AllInOne : public Printer, public Scanner {
+public:
+    void copy() {
+        cout << "Copying..." << endl;
+    }
+};
+
+int main() {
+    AllInOne aio;
+    aio.print();
+    aio.scan();
+    aio.copy();
+}
+
+5. Diamond Inheritance (Ambiguity):
+Two base classes inherit from one grand base class, and a fourth class inherits from those two.
+
+class A {
+public:
+    void show() {
+        cout << "From class A" << endl;
+    }
+};
+
+class B : public A {};
+class C : public A {};
+
+// Diamond occurs here
+class D : public B, public C {};
+
+int main() {
+    D d;
+    // d.show(); // Error: Ambiguous
+    d.B::show(); // Correct way
+}
+
+6. Tree Inheritance:
+A mix of hierarchical and multiple inheritance forming a tree-like structure.
+
+3. Protected Access Modifier in Inheritance:
+Access Rules for protected:
+
+Access From	private	protected	public
+
+Same Class	       ✅	          ✅	         ✅
+Derived Class	    ❌	          ✅	         ✅
+Outside Class        ❌	          ❌	         ✅
+/Object	
+
+class Parent {
+protected:
+    int protectedValue = 50;
+};
+
+class Child : public Parent {
+public:
+    void show() {
+        cout << "Accessing protected: " << protectedValue << endl;
+    }
+};
+
+int main() {
+    Child c;
+    c.show();
+    // cout << c.protectedValue; // ❌ Error
+}
+
+4. Constructor Execution Order in Inheritance:
+
+Rule:
+Base class constructor executes first, followed by derived class constructor.
+Destructor order is reverse: 
+Derived class → Base class.
+
+class Base {
+public:
+    Base() {
+        cout << "Base Constructor Called" << endl;
+    }
+    ~Base() {
+        cout << "Base Destructor Called" << endl;
+    }
+};
+
+class Derived : public Base {
+public:
+    Derived() {
+        cout << "Derived Constructor Called" << endl;
+    }
+    ~Derived() {
+        cout << "Derived Destructor Called" << endl;
+    }
+};
+
+int main() {
+    Derived d;
+}
